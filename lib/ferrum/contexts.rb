@@ -52,7 +52,7 @@ module Ferrum
         next unless info["type"] == "page"
 
         context_id = info["browserContextId"]
-        @contexts[context_id]&.add_target(info)
+        @contexts[context_id] && @contexts[context_id].add_target(info)
       end
 
       @browser.client.on("Target.targetInfoChanged") do |params|
@@ -60,7 +60,7 @@ module Ferrum
         next unless info["type"] == "page"
 
         context_id, target_id = info.values_at("browserContextId", "targetId")
-        @contexts[context_id]&.update_target(target_id, info)
+        @contexts[context_id] && @contexts[context_id].update_target(target_id, info)
       end
 
       @browser.client.on("Target.targetDestroyed") do |params|

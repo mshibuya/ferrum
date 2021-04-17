@@ -25,7 +25,7 @@ module Ferrum
       ensure
         FileUtils.rm_f(original_path)
         FileUtils.rm_f(file)
-        browser&.quit
+        browser && browser.quit
       end
     end
 
@@ -38,7 +38,7 @@ module Ferrum
           browser.go_to(base_url("/ferrum/console_log"))
           expect(logger.string).to include("Hello world")
         ensure
-          browser&.quit
+          browser && browser.quit
         end
       end
     end
@@ -49,7 +49,7 @@ module Ferrum
         browser = Browser.new(ignore_default_browser_options: true, browser_options: defaults)
         browser.go_to(base_url("/ferrum/console_log"))
       ensure
-        browser&.quit
+        browser && browser.quit
       end
     end
 
@@ -148,7 +148,7 @@ module Ferrum
         browser.go_to(base_url)
         expect(browser.viewport_size).to eq([800, 600])
       ensure
-        browser&.quit
+        browser && browser.quit
       end
     end
 
@@ -188,7 +188,7 @@ module Ferrum
             browser.evaluate("navigator.geolocation")
           ).to_not eq(nil)
         ensure
-          browser&.quit
+          browser && browser.quit
         end
       end
 
@@ -201,7 +201,7 @@ module Ferrum
 
           expect(browser.evaluate(%(window.secret))).to eq("top")
         ensure
-          browser&.quit
+          browser && browser.quit
         end
       end
 
@@ -210,7 +210,7 @@ module Ferrum
           browser = Browser.new(extensions: [File.expand_path("../support/non_existent.js", __dir__)])
           expect { browser.go_to }.to raise_error(Errno::ENOENT)
         ensure
-          browser&.quit
+          browser && browser.quit
         end
       end
 
@@ -218,7 +218,7 @@ module Ferrum
         begin
           browser = Browser.new(base_url: base_url)
 
-          browser.evaluate_on_new_document <<~JS
+          browser.evaluate_on_new_document <<-JS
             Object.defineProperty(navigator, "languages", {
               get: function() { return ["tlh"]; }
             });
@@ -228,7 +228,7 @@ module Ferrum
           language = browser.at_xpath("//*[@id='browser-languages']/text()").text
           expect(language).to eq("tlh")
         ensure
-          browser&.quit
+          browser && browser.quit
         end
       end
     end
@@ -281,7 +281,7 @@ module Ferrum
           sleep 0.1
           expect(browser.body).to include("hello")
         ensure
-          browser&.quit
+          browser && browser.quit
         end
       end
 
@@ -294,7 +294,7 @@ module Ferrum
           sleep 0.1
           expect(browser.body).to include("hello")
         ensure
-          browser&.quit
+          browser && browser.quit
         end
       end
     end
@@ -370,7 +370,7 @@ module Ferrum
 
           expect { browser.go_to("/ferrum/really_slow") }.not_to raise_error
         ensure
-          browser&.quit
+          browser && browser.quit
         end
       end
     end
@@ -382,7 +382,7 @@ module Ferrum
 
         expect { TCPServer.new("127.0.0.1", 12345) }.to raise_error(Errno::EADDRINUSE)
       ensure
-        browser&.quit
+        browser && browser.quit
       end
     end
 
@@ -393,7 +393,7 @@ module Ferrum
           browser.go_to(base_url)
           expect(browser.body).to include("Hello world!")
         ensure
-          browser&.quit
+          browser && browser.quit
         end
       end
     end
@@ -409,14 +409,14 @@ module Ferrum
           TCPServer.new(ENV["BROWSER_TEST_HOST"], 12345)
         }.to raise_error(Errno::EADDRINUSE)
       ensure
-        browser&.quit
+        browser && browser.quit
       end
     end
 
     it "lists the open windows" do
       browser.go_to
 
-      browser.execute <<~JS
+      browser.execute <<-JS
         window.open("/ferrum/simple", "popup")
       JS
 
@@ -424,7 +424,7 @@ module Ferrum
 
       expect(browser.targets.size).to eq(2)
 
-      browser.execute <<~JS
+      browser.execute <<-JS
         window.open("/ferrum/simple", "popup2")
       JS
 
@@ -480,10 +480,10 @@ module Ferrum
 
     it "clears local storage after reset" do
       browser.go_to
-      browser.execute <<~JS
+      browser.execute <<-JS
         localStorage.setItem("key", "value");
       JS
-      value = browser.evaluate <<~JS
+      value = browser.evaluate <<-JS
         localStorage.getItem("key");
       JS
 
@@ -492,7 +492,7 @@ module Ferrum
       browser.reset
 
       browser.go_to
-      value = browser.evaluate <<~JS
+      value = browser.evaluate <<-JS
         localStorage.getItem("key");
       JS
       expect(value).to be_nil

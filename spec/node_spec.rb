@@ -20,7 +20,7 @@ module Ferrum
     it "raises an error if the element is not visible" do
       browser.go_to("/ferrum/index")
 
-      browser.execute <<~JS
+      browser.execute <<-JS
         document.querySelector("a[href=js_redirect]").style.display = "none"
       JS
 

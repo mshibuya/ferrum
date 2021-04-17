@@ -57,13 +57,13 @@ module Ferrum
       end
 
       def viewport_size
-        evaluate <<~JS
+        evaluate <<-JS
           [window.innerWidth, window.innerHeight]
         JS
       end
 
       def document_size
-        evaluate <<~JS
+        evaluate <<-JS
           [document.documentElement.scrollWidth,
            document.documentElement.scrollHeight]
         JS

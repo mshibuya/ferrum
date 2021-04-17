@@ -121,7 +121,7 @@ module Ferrum
     end
 
     def responsive?
-      return false if @server_thread&.join(0)
+      return false if @server_thread && @server_thread.join(0)
       res = Net::HTTP.start(host, port, read_timeout: 2, max_retries: 0) { |h| h.get("/__identify__") }
       return res.body == app.object_id.to_s if res.is_a?(Net::HTTPSuccess) || res.is_a?(Net::HTTPRedirection)
     rescue SystemCallError, Net::ReadTimeout
@@ -136,7 +136,7 @@ module Ferrum
       server = TCPServer.new(host, 0)
       server.addr[1]
     ensure
-      server&.close
+      server && server.close
     end
   end
 end

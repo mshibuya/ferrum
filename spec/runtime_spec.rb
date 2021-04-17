@@ -22,7 +22,7 @@ module Ferrum
 
       it "can return structures with elements" do
         browser.go_to("/ferrum/type")
-        result = browser.evaluate <<~JS
+        result = browser.evaluate <<-JS
           {
             a: document.getElementById("empty_input"),
             b: { c: document.querySelectorAll("#empty_textarea, #filled_textarea") }
@@ -40,7 +40,7 @@ module Ferrum
 
     context "evaluate_func" do
       let(:function) {
-        <<~JS
+        <<-JS
           function(c) {
             let a = 1;
             let b = 2;
@@ -57,7 +57,7 @@ module Ferrum
         browser.go_to("/ferrum/index")
         node = browser.at_xpath(".//a")
 
-        function = <<~JS
+        function = <<-JS
           function(attributeName) {
             return this.getAttribute(attributeName);
           }
@@ -107,7 +107,7 @@ module Ferrum
     context "cyclic structure" do
       context "ignores seen" do
         let(:code) {
-          <<~JS
+          <<-JS
             (function() {
               var a = {};
               var b = {};
@@ -170,7 +170,7 @@ module Ferrum
 
     context "#add_style_tag" do
       let(:font_size) {
-        <<~JS
+        <<-JS
           window
             .getComputedStyle(document.querySelector('a'))
             .getPropertyValue('font-size')

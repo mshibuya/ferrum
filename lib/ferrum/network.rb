@@ -49,15 +49,15 @@ module Ferrum
     end
 
     def request
-      @exchange&.request
+      @exchange && @exchange.request
     end
 
     def response
-      @exchange&.response
+      @exchange && @exchange.response
     end
 
     def status
-      response&.status
+      response && response.status
     end
 
     def clear(type)
@@ -126,7 +126,7 @@ module Ferrum
         # for a redirect. So we assign response from the params to previous
         # exchange and build new exchange to assign this request to it.
         exchange = select(request.id).last
-        exchange = build_exchange(request.id) unless exchange&.blank?
+        exchange = build_exchange(request.id) unless exchange && exchange.blank?
 
         # On redirects Chrome doesn't change `requestId` and there's no
         # `Network.responseReceived` event for such request. If there's already

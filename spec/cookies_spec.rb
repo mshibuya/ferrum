@@ -99,7 +99,7 @@ module Ferrum
           browser.go_to("http://127.0.0.1:#{port}/ferrum/get_cookie")
           expect(browser.body).not_to include("123456")
         ensure
-          browser&.quit
+          browser && browser.quit
         end
       end
     end

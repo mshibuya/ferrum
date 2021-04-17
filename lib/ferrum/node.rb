@@ -155,7 +155,7 @@ module Ferrum
     private
 
     def get_bounding_rect_coordinates
-      evaluate <<~JS
+      evaluate <<-JS
         [this.getBoundingClientRect().left + window.pageXOffset + (this.offsetWidth / 2),
          this.getBoundingClientRect().top + window.pageYOffset + (this.offsetHeight / 2)]
       JS

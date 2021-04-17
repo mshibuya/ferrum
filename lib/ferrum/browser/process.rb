@@ -89,7 +89,7 @@ module Ferrum
             ObjectSpace.define_finalizer(self, self.class.process_killer(@xvfb.pid))
           end
 
-          @pid = ::Process.spawn(Hash(@xvfb&.to_env), *@command.to_a, process_options)
+          @pid = ::Process.spawn(Hash(@xvfb && @xvfb.to_env), *@command.to_a, process_options)
           ObjectSpace.define_finalizer(self, self.class.process_killer(@pid))
 
           parse_ws_url(read_io, @process_timeout)
@@ -102,7 +102,7 @@ module Ferrum
       def stop
         if @pid
           kill(@pid)
-          kill(@xvfb.pid) if @xvfb&.pid
+          kill(@xvfb.pid) if @xvfb && @xvfb.pid
           @pid = nil
         end
 

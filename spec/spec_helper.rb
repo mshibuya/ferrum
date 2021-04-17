@@ -23,7 +23,7 @@ RSpec.configure do |config|
       puts "V8: #{browser.process.v8_version}"
       puts "Webkit: #{browser.process.webkit_version}"
     ensure
-      browser&.quit
+      browser && browser.quit
     end
   end
 
@@ -45,7 +45,7 @@ RSpec.configure do |config|
   end
 
   config.before(:each) do
-    server&.wait_for_pending_requests
+    server && server.wait_for_pending_requests
 
     if ENV["CI"]
       FERRUM_LOGGER.truncate(0)

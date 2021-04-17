@@ -133,7 +133,7 @@ module Ferrum
     it "has no trouble clicking elements when the size of a document changes", skip: true do
       browser.go_to("/ferrum/long_page")
       browser.at_css("#penultimate").click
-      browser.execute <<~JS
+      browser.execute <<-JS
         el = document.getElementById("penultimate")
         el.parentNode.removeChild(el)
       JS
@@ -155,7 +155,7 @@ module Ferrum
 
     context "#move" do
       let(:tracking_code) {
-        <<~JS
+        <<-JS
           window.result = [];
           document.addEventListener("mousemove", e => {
             window.result.push([e.clientX, e.clientY]);

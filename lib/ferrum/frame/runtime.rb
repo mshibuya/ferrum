@@ -16,28 +16,28 @@ module Ferrum
       INTERMITTENT_ATTEMPTS = ENV.fetch("FERRUM_INTERMITTENT_ATTEMPTS", 6).to_i
       INTERMITTENT_SLEEP = ENV.fetch("FERRUM_INTERMITTENT_SLEEP", 0.1).to_f
 
-      SCRIPT_SRC_TAG = <<~JS
+      SCRIPT_SRC_TAG = <<-JS
         const script = document.createElement("script");
         script.src = arguments[0];
         script.type = arguments[1];
         script.onload = arguments[2];
         document.head.appendChild(script);
       JS
-      SCRIPT_TEXT_TAG = <<~JS
+      SCRIPT_TEXT_TAG = <<-JS
         const script = document.createElement("script");
         script.text = arguments[0];
         script.type = arguments[1];
         document.head.appendChild(script);
         arguments[2]();
       JS
-      STYLE_TAG = <<~JS
+      STYLE_TAG = <<-JS
         const style = document.createElement("style");
         style.type = "text/css";
         style.appendChild(document.createTextNode(arguments[0]));
         document.head.appendChild(style);
         arguments[1]();
       JS
-      LINK_TAG = <<~JS
+      LINK_TAG = <<-JS
         const link = document.createElement("link");
         link.rel = "stylesheet";
         link.href = arguments[0];
@@ -51,7 +51,7 @@ module Ferrum
       end
 
       def evaluate_async(expression, wait, *args)
-        template = <<~JS
+        template = <<-JS
           function() {
             return new Promise((__f, __r) => {
               try {
@@ -227,7 +227,7 @@ module Ferrum
           "Runtime.callFunctionOn",
           objectId: object_id,
           returnByValue: true,
-          functionDeclaration: <<~JS
+          functionDeclaration: <<-JS
             function() {
               if (Array.isArray(this) &&
                   this.every(e => e instanceof Node)) {

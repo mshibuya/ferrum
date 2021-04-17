@@ -34,13 +34,15 @@ module Ferrum
       def headers_size
         @response["encodedDataLength"]
       end
-      
+
       def type
         @params["type"]
       end
 
       def content_type
-        @content_type ||= headers.find { |k, _| k.downcase == "content-type" }&.last&.sub(/;.*\z/, "")
+        value = headers.find { |k, _| k.downcase == "content-type" }
+        return unless value
+        @content_type ||= value.last && value.last.sub(/;.*\z/, "")
       end
 
       # See https://crbug.com/883475

@@ -17,7 +17,7 @@ module Ferrum
             expect(process.xvfb.screen_size).to eq("1400x1400x24")
             expect(process.xvfb.to_env).to eq("DISPLAY" => ":#{process.xvfb.display_id}")
           ensure
-            xvfb_browser&.quit
+            xvfb_browser && browser.quit
             expect(process_alive?(process.xvfb.pid)).to be(false)
           end
         end
@@ -35,7 +35,7 @@ module Ferrum
             expect(process.xvfb.screen_size).to eq("1024x768x24")
             expect(process.xvfb.to_env).to eq("DISPLAY" => ":#{process.xvfb.display_id}")
           ensure
-            xvfb_browser&.quit
+            xvfb_browser && browser.quit
             expect(process_alive?(process.xvfb.pid)).to be(false)
           end
         end
@@ -53,7 +53,7 @@ module Ferrum
           expect(process_alive?(process.xvfb.pid)).to be(true)
           expect(process.xvfb.screen_size).to eq("1024x768x24")
         ensure
-          xvfb_browser&.quit
+          xvfb_browser && browser.quit
           expect(process_alive?(process.xvfb.pid)).to be(false)
         end
       end

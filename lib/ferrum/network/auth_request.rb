@@ -18,7 +18,7 @@ module Ferrum
       end
 
       def auth_challenge?(source)
-        @params.dig("authChallenge", "source")&.downcase&.to_s == source.to_s
+        @params.dig("authChallenge", "source") && @params.dig("authChallenge", "source").downcase.to_s == source.to_s
       end
 
       def match?(regexp)

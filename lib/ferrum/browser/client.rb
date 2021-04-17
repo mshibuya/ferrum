@@ -28,7 +28,7 @@ module Ferrum
             elsif message.key?("method")
               @subscriber.async.call(message)
             else
-              @pendings[message["id"]]&.set(message)
+              @pendings[message["id"]] && @pendings[message["id"]].set(message)
             end
           end
         end
